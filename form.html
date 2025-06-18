@@ -53,8 +53,8 @@
             <div class="form-container">
                 <h2>MDA Members Form</h2>
                 <form id="mdaForm">
-                    <label for="name">Full Name (in English)</label>
-                    <input type="text" name="name" required>
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" placeholder="your full name in English" required>
     
                     <label for="grade">Grade</label>
                     <select name="grade" required>
@@ -65,14 +65,43 @@
                         <option value="G12">Grade 12</option>
                     </select>
     
-                    <label for="school">School Name</label>
-                    <input type="text" name="school" required>
+                    <label for="school">Select Your School</label>
+                    <select id="school" name="school" required>
+                        <option value="">-- Select School --</option>
+                        <option value="STEM-OCT">STEM OCT</option>
+                        <option value="STEM-Maadi">STEM Maadi</option>
+                        <option value="STEM-Obour">STEM Obour</option>
+                        <option value="STEM-Alex">STEM Alex</option>
+                        <option value="STEM-New-Cairo">STEM New Cairo</option>
+                        <option value="STEM-Sadat">STEM Sadat</option>
+                        <option value="STEM-Dakahlia">STEM Dakahlia</option>
+                        <option value="STEM-OCT-11th-district">STEM OCT 11th district</option>
+                        <option value="STEM-Luxor">STEM Luxor</option>
+                        <option value="STEM-Menia">STEM Menia</option>
+                        <option value="STEM-Sharkiya">STEM Sharkiya</option>
+                        <option value="STEM-Sohag">STEM Sohag</option>
+                        <option value="STEM-Menoufia">STEM Menoufia</option>
+                        <option value="STEM-kafr-Elshekh">STEM kafr-Elshekh</option>
+                        <option value="STEM-Red sea">STEM Red sea</option>
+                        <option value="STEM-Gharbia">STEM Gharbia</option>
+                        <option value="STEM-Beni-suef">STEM Beni-suef</option>
+                        <option value="STEM-Ismailia">STEM Ismailia</option>
+                        <option value="STEM-Assut">STEM Assut</option>
+                        <option value="STEM-Qena">STEM Qena</option>
+                        <option value="STEM-Fayoom">STEM Fayoom</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <div class="form-group" id="school-other-group" style="display: none;">
+                        <label for="school-other">Specify Your School</label>
+                        <input type="text" id="school-other" name="school-other" placeholder="what is your school name?">
+                    </div>
     
                     <label for="email">Email</label>
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" placeholder="your email" required>
     
                     <label for="age">Age</label>
-                    <input type="number" name="age" min="13" max="19" required>
+                    <input type="number" name="age" min="13" max="19" placeholder="age (must be between 13-19)" required>
     
                     <label for="motivation">Why do you want to join MDA? <span class="note">(Max 150 words)</span></label>
                     <textarea name="motivation" data-counter="counter1" rows="6" maxlength="1000" class="writing" required></textarea>
