@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=> {
   // Form Submission Code (keep your existing functionality)
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwEuit1iBA14Fdk7IbGLJzh8hu0Y2tuTFm4Yi0iewHRy0PZvRw3LKnPuDryaLZUrA6zYA/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbztzLlKM0Q8_xbPLVgE1FYQwlM2meF23DYdkMrBYYaVIQ7UsIQiR2Gam3UxnvUPIP4r7Q/exec';
   const form = document.getElementById('mdaForm');
   const motivationField = form.elements['motivation'];
   const schoolSelect = document.getElementById('school'); // normal option
@@ -40,15 +40,38 @@ document.addEventListener('DOMContentLoaded', ()=> {
     // add the data online
     fetch(scriptURL, {
       method: 'POST',
-      body: data
+      body: JSON.stringify(Object.fromEntries(data)),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors'
     })
     .then(() => {
-      console.log("Your application has been submitted successfully!");
+      showNotification();
       form.reset();
       document.querySelector('#counter1').textContent = "0";
     })
-    .catch(error => alert("Error submitting form: " + error.message));
-  });
+    .catch(error =>
+      showNotification("Error submitting form: " + error.message, true)
+    );
+
+    // Notification function
+  function showNotification(message = "Your application has been submitted successfully!", isError = false) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
+    notification.style.display = 'block';
+    
+    // Reset animation by briefly removing and re-adding the element
+    notification.style.animation = 'none';
+    notification.offsetHeight; /* trigger reflow */
+    notification.style.animation = null;
+    
+    // Hide after animation completes
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 3000);
+  }
 
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,4 +79,4 @@ document.addEventListener('DOMContentLoaded', ()=> {
   }
 
 
-});
+})});

@@ -102,6 +102,9 @@
     
                     <label for="age">Age</label>
                     <input type="number" name="age" min="13" max="19" placeholder="age (must be between 13-19)" required>
+
+                    <label for="phone">Phone number</label>
+                    <input type="tel" name="phone" id="phone" min="11" max="11" placeholder="01#########" required>
     
                     <label for="motivation">Why do you want to join MDA? <span class="note">(Max 150 words)</span></label>
                     <textarea name="motivation" data-counter="counter1" rows="6" maxlength="1000" class="writing" required></textarea>
@@ -158,6 +161,10 @@
         <p>Copyright © 2024. All Rights Reserved. — Designed with love by Noureldin Ali</p>
         </div>
     </footer>
+
+    <div id="notification" class="notification">
+        Your application has been submitted successfully!
+    </div>
 
     <script src="js/form.js"></script>
     <script src="js/common.js"></script>
