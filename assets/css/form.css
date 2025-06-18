@@ -1,0 +1,168 @@
+:root {
+  --backImg : ;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+  
+main {
+  background-color: #002059;
+}
+
+main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dim) */
+    z-index: -1;
+}
+
+.background-carrier {
+  background: url('../imgs/form_background_desktop.jpg');
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 1;
+  padding: 120px 0px 90px 0px;
+}
+
+.background-carrier::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dim) */
+    z-index: -1;
+}
+
+h2, form label {
+  color: white;
+}
+
+.form-container {
+  max-width: 600px;
+  background: transparent;
+  padding: 30px 40px;
+  margin: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(250, 250, 250, 249.9);
+  position: relative;
+  z-index: 2;
+}
+
+.form-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dim) */
+    z-index: -1;
+    border-radius: 20px;
+
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin: 15px 0 5px;
+  color: #34495e;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 4px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background: transparent;
+  color: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: 2px solid #002059; 
+  box-shadow: 0 0 8px 2px rgba(11, 191, 226, 0.6); 
+  transition: all 0.3s ease-in-out;
+}
+
+
+textarea {
+  resize: vertical;
+}
+
+.word-count {
+  text-align: right;
+  font-size: 0.9em;
+  color: white;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 20px;
+  background-color: #002059;
+  color: white;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+option {
+  color: #002059;
+}
+
+button:hover {
+  background-color: #315086;
+  /* transform: translateY('5px'); */
+}
+
+@media (max-width: 768px) {
+
+  .background-carrier {
+    background: url('../imgs/form_background_mobile.jpg');
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+  }
+
+  .form-container {
+    margin: 20px auto; /* Add margin to avoid edge-to-edge crowding */
+    padding: 25px 20px; /* Slightly more padding for breathing room */
+    max-width: 90%; /* Prevent form from touching screen edges */
+    margin-bottom: 100px;
+  }
+
+  input, 
+  select, 
+  textarea {
+    font-size: 16px; /* Larger text for mobile typing */
+    padding: 12px; /* Bigger tap targets */
+  }
+
+  button {
+    padding: 14px; /* Easier to tap */
+  }
+
+}
+

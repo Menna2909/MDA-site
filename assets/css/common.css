@@ -1,0 +1,57 @@
+/* Mobile Menu Styles - Add to form.css */
+.nav-icon {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed; /* Changed from absolute to fixed */
+    top: 80px; /* Adjust based on your header height */
+    left: 0;
+    width: 100%;
+    background: #002059;
+    z-index: 1000;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    color: white;
+    padding: 12px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu .sign {
+    margin-top: 15px;
+}
+
+.mobile-menu .new-account {
+    background: #0bbfe2;
+    padding: 10px 15px !important;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .nav-icon {
+        display: block;
+    }
+    
+    .navigation {
+        display: none;
+    }
+    
+    .mobile-menu {
+        top: 70px; /* Adjust based on your header height */
+    }
+}

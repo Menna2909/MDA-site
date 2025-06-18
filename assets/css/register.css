@@ -1,0 +1,16 @@
+#school-other-group {
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Word Counter Styles */
+.word-count {
+    text-align: right;
+    font-size: 0.9em;
+    color: white;
+    margin-top: 5px;
+}
+
+.word-count span {
+    font-weight: bold;
+}
