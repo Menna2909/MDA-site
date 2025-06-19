@@ -1,0 +1,9 @@
+.logo-img {
+    transform: all 0.3 ease;
+}
+
+@media (max-width: 786px) {
+    .logo-img {
+        width: 0.33fr;
+    }
+}
