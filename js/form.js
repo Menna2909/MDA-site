@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Form Submission Code (keep your existing functionality)
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbztzLlKM0Q8_xbPLVgE1FYQwlM2meF23DYdkMrBYYaVIQ7UsIQiR2Gam3UxnvUPIP4r7Q/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwB8yaXxD_xfcIt9qy9Ysn1pYGoVACrqUwHSALB-2XYmJErNWh_n12bXZNJuXRFR1Zptg/exec';
   const form = document.getElementById('mdaForm');
   const motivationField = form.elements['motivation'];
-  const schoolSelect = document.getElementById('school'); // normal option
+  const schoolSelect = document.getElementById('school');
   const schoolOtherGroup = document.getElementById('school-other-group');
+  const submitBtn = document.querySelector('#submit-btn');
 
-  schoolSelect.addEventListener('change', function () {
+  // Toggle other school field visibility
+  schoolSelect.addEventListener('change', function() {
     if (this.value === 'Other') {
       schoolOtherGroup.style.display = 'block';
       document.getElementById('school-other').required = true;
@@ -18,63 +19,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-
-    const submitBtn = document.querySelector('#submit-btn');
+    
+    // UI feedback while processing
     submitBtn.textContent = '...processing';
-    submitBtn.disabled = true; // Disable button during processing
+    submitBtn.disabled = true;
 
     try {
-      // Email checking
+      // Email validation
       const email = form.elements['email'].value;
       if (!validateEmail(email)) {
-        alert("Please enter a valid email address.");
+        showNotification("Please enter a valid email address.", true);
         return;
       }
 
       // Word count validation
       const words = motivationField.value.trim().split(/\s+/).length;
       if (words > 150) {
-        alert("Please keep your answer under 150 words.");
+        showNotification("Please keep your answer under 150 words.", true);
         return;
       }
 
-      const data = new FormData(form);
-      data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
+      // Prepare form data
+      const formData = new FormData(form);
+      const submissionData = Object.fromEntries(formData);
+      
+      // Set correct school value
+      submissionData.school = schoolSelect.value === 'Other' 
+        ? document.getElementById('school-other').value 
+        : schoolSelect.value;
 
-      // Check if user submitted before
-      // const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json' // Explicitly require JSON
-      //   },
-      //   body: JSON.stringify({ email: email })
-      // })
-      // .then(response => {
-      //   if (!response.ok) throw new Error('Network response was not ok');
-      //   return response.json(); // Will now fail properly if not JSON
-      // });
-
-      // const { canSubmit } = await submissionResponse.json();
-
-      // if (!canSubmit) {
-      //   showNotification("You have already submitted an application", true);
-      //   return;
-      // }
-
-      // Submit the form data
-      await fetch(scriptURL, {
+      // First check for existing submission (including IP check)
+      const checkResponse = await fetch(scriptURL, {
         method: 'POST',
-        body: JSON.stringify(Object.fromEntries(data)),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: submissionData.email,
+          // The backend will automatically get the IP from headers
+          // We don't need to send it from frontend
+          checkOnly: true // Optional flag to indicate this is just a check
+        })
       });
+
+      const checkResult = await checkResponse.json();
+      
+      if (checkResult.error || checkResult.success === false) {
+        const errorMsg = checkResult.error || "You have already submitted an application";
+        showNotification(errorMsg, true);
+        return;
+      }
+
+      // If no duplicate found, proceed with full submission
+      const submitResponse = await fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submissionData)
+      });
+
+      const result = await submitResponse.json();
+      
+      if (result.error || result.success === false) {
+        throw new Error(result.error || "Submission failed");
+      }
 
       showNotification("Your application has been submitted successfully!", false);
       form.reset();
       document.querySelector('#counter1').textContent = "0";
+      
     } catch (error) {
       console.error('Submission error:', error);
       showNotification("Error submitting form: " + error.message, true);
@@ -84,27 +94,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Notification function
   function showNotification(message, isError) {
-      const notification = document.getElementById('notification');
-      notification.textContent = message;
-      notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
-      notification.style.display = 'block';
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
+    notification.style.display = 'block';
 
-      // Reset animation by briefly removing and re-adding the element
-      notification.style.animation = 'none';
-      notification.offsetHeight; /* trigger reflow */
-      notification.style.animation = null;
+    // Reset animation
+    notification.style.animation = 'none';
+    notification.offsetHeight; /* trigger reflow */
+    notification.style.animation = null;
 
-      // Hide after animation completes
-      setTimeout(() => {
-        notification.style.display = 'none';
-      }, 3000);
-    }
+    // Hide after animation completes
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 3000);
+  }
 
   function validateEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email.toLowerCase());
-    }
-
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email.toLowerCase());
+  }
 });
