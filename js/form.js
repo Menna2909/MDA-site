@@ -45,10 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' // Explicitly require JSON
         },
-        body: JSON.stringify({ email: email }), // Send email for better tracking
-        // mode: 'no-cors'
+        body: JSON.stringify({ email: userEmail })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json(); // Will now fail properly if not JSON
       });
 
       const { canSubmit } = await submissionResponse.json();

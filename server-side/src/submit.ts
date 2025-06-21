@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 // API endpoint
-app.post('/submit', async (req: Request, res: Response) => {
+app.post('/submit', express.json(),async (req: Request, res: Response) => {
   // ... (keep your existing submit logic)
 });
 
