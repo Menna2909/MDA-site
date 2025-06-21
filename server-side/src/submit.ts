@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 
 const app = express();
-const PORT = 3000;
+// const PORT = 'https://mda-site-production.up.railway.app/submit';
+const PORT = process.env.PORT || 3000;
 
 // Database structure: 
 // {
@@ -18,8 +19,8 @@ const submissionDB = {
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',
-  methods: ['GET', 'POST'],
+  origin: ['http://127.0.0.1:5500', 'https://mdawebsite.netlify.app/'], // Replace with your frontend URL
+  methods: ['POST'],
   credentials: true
 }));
 
@@ -94,6 +95,6 @@ app.get('/debug', (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log('Debug endpoint: http://localhost:3000/debug');
+  console.log(`Server running on ${PORT}`);
+//   console.log('Debug endpoint: http://localhost:3000/debug');
 });

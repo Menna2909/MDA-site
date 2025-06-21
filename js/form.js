@@ -42,12 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
       data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
 
       // Check if user submitted before
-      const submissionResponse = await fetch('http://localhost:3000/submit', {
+      const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: email }) // Send email for better tracking
+        body: JSON.stringify({ email: email }), // Send email for better tracking
+        // mode: 'no-cors'
       });
 
       const { canSubmit } = await submissionResponse.json();
