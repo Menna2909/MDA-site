@@ -42,25 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
       data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
 
       // Check if user submitted before
-      const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json' // Explicitly require JSON
-        },
-        body: JSON.stringify({ email: email })
-      })
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json(); // Will now fail properly if not JSON
-      });
+      // const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Accept': 'application/json' // Explicitly require JSON
+      //   },
+      //   body: JSON.stringify({ email: email })
+      // })
+      // .then(response => {
+      //   if (!response.ok) throw new Error('Network response was not ok');
+      //   return response.json(); // Will now fail properly if not JSON
+      // });
 
-      const { canSubmit } = await submissionResponse.json();
+      // const { canSubmit } = await submissionResponse.json();
 
-      if (!canSubmit) {
-        showNotification("You have already submitted an application", true);
-        return;
-      }
+      // if (!canSubmit) {
+      //   showNotification("You have already submitted an application", true);
+      //   return;
+      // }
 
       // Submit the form data
       await fetch(scriptURL, {
