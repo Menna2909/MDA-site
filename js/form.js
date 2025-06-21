@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', ()=> {
+document.addEventListener('DOMContentLoaded', () => {
   // Form Submission Code (keep your existing functionality)
   const scriptURL = 'https://script.google.com/macros/s/AKfycbztzLlKM0Q8_xbPLVgE1FYQwlM2meF23DYdkMrBYYaVIQ7UsIQiR2Gam3UxnvUPIP4r7Q/exec';
   const form = document.getElementById('mdaForm');
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const schoolSelect = document.getElementById('school'); // normal option
   const schoolOtherGroup = document.getElementById('school-other-group');
 
-  schoolSelect.addEventListener('change', function() {
+  schoolSelect.addEventListener('change', function () {
     if (this.value === 'Other') {
       schoolOtherGroup.style.display = 'block';
       document.getElementById('school-other').required = true;
@@ -16,67 +16,90 @@ document.addEventListener('DOMContentLoaded', ()=> {
     }
   });
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    // Email checking
-    const email = form.elements['email'].value;
-    if (!validateEmail(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
+    const submitBtn = document.querySelector('#submit-btn');
+    submitBtn.textContent = '...processing';
+    submitBtn.disabled = true; // Disable button during processing
 
-    // Word count validation
-    const words = motivationField.value.trim().split(/\s+/).length;
-    if (words > 150) {
-      alert("Please keep your answer under 150 words.");
-      return;
-    }
-      
+    try {
+      // Email checking
+      const email = form.elements['email'].value;
+      if (!validateEmail(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
 
-    const data = new FormData(form);
-    data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value)
+      // Word count validation
+      const words = motivationField.value.trim().split(/\s+/).length;
+      if (words > 150) {
+        alert("Please keep your answer under 150 words.");
+        return;
+      }
 
-    // add the data online
-    fetch(scriptURL, {
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(data)),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      mode: 'no-cors'
-    })
-    .then(() => {
-      showNotification();
+      const data = new FormData(form);
+      data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
+
+      // Check if user submitted before
+      const submissionResponse = await fetch('http://localhost:3000/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email }) // Send email for better tracking
+      });
+
+      const { canSubmit } = await submissionResponse.json();
+
+      if (!canSubmit) {
+        showNotification("You have already submitted an application", true);
+        return;
+      }
+
+      // Submit the form data
+      await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(data)),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'no-cors'
+      });
+
+      showNotification("Your application has been submitted successfully!", false);
       form.reset();
       document.querySelector('#counter1').textContent = "0";
-    })
-    .catch(error =>
-      showNotification("Error submitting form: " + error.message, true)
-    );
+    } catch (error) {
+      console.error('Submission error:', error);
+      showNotification("Error submitting form: " + error.message, true);
+    } finally {
+      submitBtn.textContent = 'Submit Application';
+      submitBtn.disabled = false;
+    }
+  });
 
-    // Notification function
-  function showNotification(message = "Your application has been submitted successfully!", isError = false) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
-    notification.style.display = 'block';
-    
-    // Reset animation by briefly removing and re-adding the element
-    notification.style.animation = 'none';
-    notification.offsetHeight; /* trigger reflow */
-    notification.style.animation = null;
-    
-    // Hide after animation completes
-    setTimeout(() => {
-      notification.style.display = 'none';
-    }, 3000);
-  }
+  // Notification function
+  function showNotification(message, isError) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.style.backgroundColor = isError ? '#f44336' : '#4CAF50';
+      notification.style.display = 'block';
+
+      // Reset animation by briefly removing and re-adding the element
+      notification.style.animation = 'none';
+      notification.offsetHeight; /* trigger reflow */
+      notification.style.animation = null;
+
+      // Hide after animation completes
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
 
   function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email.toLowerCase());
-  }
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email.toLowerCase());
+    }
 
-
-})});
+});
