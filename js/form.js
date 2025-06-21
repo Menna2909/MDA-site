@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json' // Explicitly require JSON
         },
-        body: JSON.stringify({ email: userEmail })
+        body: JSON.stringify({ email: email })
       })
       .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
