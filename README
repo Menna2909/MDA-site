@@ -1,4 +1,0 @@
-## How to upload the server after any edit ##
-```
-npx railway up
-```

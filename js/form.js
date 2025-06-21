@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Form Submission Code (keep your existing functionality)
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbztzLlKM0Q8_xbPLVgE1FYQwlM2meF23DYdkMrBYYaVIQ7UsIQiR2Gam3UxnvUPIP4r7Q/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxyScWUonu2S_1kDgk_egURNbjwmFvwN1Az1_pPh7Vt-ARKEXcEvDo8cAbG7QaHm5ruJg/exec';
   const form = document.getElementById('mdaForm');
   const motivationField = form.elements['motivation'];
   const schoolSelect = document.getElementById('school'); // normal option
@@ -41,28 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = new FormData(form);
       data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
 
-      // Check if user submitted before
-      // const submissionResponse = await fetch('https://mda-site-production.up.railway.app/submit', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json' // Explicitly require JSON
-      //   },
-      //   body: JSON.stringify({ email: email })
-      // })
-      // .then(response => {
-      //   if (!response.ok) throw new Error('Network response was not ok');
-      //   return response.json(); // Will now fail properly if not JSON
-      // });
+      // // Check if email was submitted before 
+      const submittedEmails = await fetch(scriptURL)
+      .then(data => data.json())
+      .then(data => {
+        return data
+      })
+      .catch(err => console.log(`error occured : ${err}`));
 
-      // const { canSubmit } = await submissionResponse.json();
-
-      // if (!canSubmit) {
-      //   showNotification("You have already submitted an application", true);
-      //   return;
-      // }
+      const doesSubmittedBefore = submittedEmails.emails.some(element => element === email);
 
       // Submit the form data
+      if (doesSubmittedBefore) {
+        showNotification('You have esubmitted an application before', true);
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+        return;
+      } 
+
       await fetch(scriptURL, {
         method: 'POST',
         body: JSON.stringify(Object.fromEntries(data)),
@@ -71,11 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         mode: 'no-cors'
       });
-
-      window.location.href = 'sucess.html'
-      // showNotification("Your application has been submitted successfully!", false);
+      showNotification("Your application has been submitted successfully!", false);
+      setTimeout(() => {
+        window.location.href = 'sucess.html';
+      }, 1500);
       // form.reset();
       // document.querySelector('#counter1').textContent = "0";
+
     } catch (error) {
       console.error('Submission error:', error);
       showNotification("Error submitting form: " + error.message, true);
