@@ -19,69 +19,73 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    const submitBtn = document.querySelector('#submit-btn');
-    submitBtn.textContent = '...processing';
-    submitBtn.disabled = true; // Disable button during processing
+    showNotification("The form has closed", true);
 
-    try {
-      // Email checking
-      const email = form.elements['email'].value;
-      if (!validateEmail(email)) {
-        alert("Please enter a valid email address.");
-        return;
-      }
+    // """
+    // const submitBtn = document.querySelector('#submit-btn');
+    // submitBtn.textContent = '...processing';
+    // submitBtn.disabled = true; // Disable button during processing
 
-      // Word count validation
-      const words = motivationField.value.trim().split(/\s+/).length;
-      if (words > 150) {
-        alert("Please keep your answer under 150 words.");
-        return;
-      }
+    // try {
+    //   // Email checking
+    //   const email = form.elements['email'].value;
+    //   if (!validateEmail(email)) {
+    //     alert("Please enter a valid email address.");
+    //     return;
+    //   }
 
-      const data = new FormData(form);
-      data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
+    //   // Word count validation
+    //   const words = motivationField.value.trim().split(/\s+/).length;
+    //   if (words > 150) {
+    //     alert("Please keep your answer under 150 words.");
+    //     return;
+    //   }
 
-      // // Check if email was submitted before 
-      const submittedEmails = await fetch(scriptURL)
-      .then(data => data.json())
-      .then(data => {
-        return data
-      })
-      .catch(err => console.log(`error occured : ${err}`));
+    //   const data = new FormData(form);
+    //   data.set('school', schoolSelect.value === 'Other' ? document.getElementById('school-other').value : schoolSelect.value);
 
-      const doesSubmittedBefore = submittedEmails.emails.some(element => element === email);
+    //   // // Check if email was submitted before 
+    //   const submittedEmails = await fetch(scriptURL)
+    //   .then(data => data.json())
+    //   .then(data => {
+    //     return data
+    //   })
+    //   .catch(err => console.log(`error occured : ${err}`));
 
-      // Submit the form data
-      if (doesSubmittedBefore) {
-        showNotification('You have esubmitted an application before', true);
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 2000);
-        return;
-      } 
+    //   const doesSubmittedBefore = submittedEmails.emails.some(element => element === email);
 
-      await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(data)),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
-      });
-      showNotification("Your application has been submitted successfully!", false);
-      setTimeout(() => {
-        window.location.href = 'sucess.html';
-      }, 1500);
-      // form.reset();
-      // document.querySelector('#counter1').textContent = "0";
+    //   // Submit the form data
+    //   if (doesSubmittedBefore) {
+    //     showNotification('You have esubmitted an application before', true);
+    //     setTimeout(() => {
+    //       window.location.href = 'index.html';
+    //     }, 2000);
+    //     return;
+    //   } 
 
-    } catch (error) {
-      console.error('Submission error:', error);
-      showNotification("Error submitting form: " + error.message, true);
-    } finally {
-      submitBtn.textContent = 'Submit Application';
-      submitBtn.disabled = false;
-    }
+    //   await fetch(scriptURL, {
+    //     method: 'POST',
+    //     body: JSON.stringify(Object.fromEntries(data)),
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     mode: 'no-cors'
+    //   });
+    //   showNotification("Your application has been submitted successfully!", false);
+    //   setTimeout(() => {
+    //     window.location.href = 'sucess.html';
+    //   }, 1500);
+    //   // form.reset();
+    //   // document.querySelector('#counter1').textContent = "0";
+
+    // } catch (error) {
+    //   console.error('Submission error:', error);
+    //   showNotification("Error submitting form: " + error.message, true);
+    // } finally {
+    //   submitBtn.textContent = 'Submit Application';
+    //   submitBtn.disabled = false;
+    // }
+    // """
   });
 
   // Notification function
