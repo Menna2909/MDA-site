@@ -1,0 +1,106 @@
+.leaderboard {
+    width: 100%;
+    padding: 3em 2em 3em 2em;
+    /* background-color: #f9f9f9; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    justify-content: center;
+}
+
+.leaderboard h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.1em;
+}
+
+table.leaderboard-table {
+    width: 80%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin-top: 2em;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+    padding: 1em;
+    text-align: center;
+    border: 3px solid #002059;
+}
+
+/* .leaderboard-table tr:nth-child(even) {
+    background-color: #521478;
+} */
+
+.leaderboard-table tbody tr:hover {
+  background-color: #0bbfe2;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.leaderboard-table th {
+    background-color: #002059;
+    color: white;
+    font-size: 1.2em;
+    border: #f9f9f9;
+}
+
+.name_row{
+  display: flex;
+  align-items: center;
+  justify-content: first baseline;
+  font-size: 20px;
+}
+
+tr{
+  text-shadow: 0 0 8px #fff, 0 0 2px #002059, 0 0 20px #002059;
+}
+
+.name_row img {
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.rank-1 {
+  /* background: linear-gradient(90deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.05) 100%); */
+  /* color: #FFD700; */
+  background-color: gold;
+}
+
+.rank-2 {
+  /* background: linear-gradient(90deg, rgba(79, 75, 75, 0.1) 0%, rgba(192,192,192,0.05) 100%); */
+  /* color: #c0c0c0; */
+  background-color: silver;
+}
+
+.rank-3 {
+  /* background: linear-gradient(90deg, rgba(205,127,50,0.1) 0%, rgba(205,127,50,0.05) 100%);
+  color: #cd7f32 */
+  background-color: #da9856ce;
+}
+
+.background-carrier {
+  background: url('../imgs/form_background_desktop.jpg');
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  color: var(--section-background);
+  z-index: 1;
+  min-height: 100vh;
+  width: 100%;
+  overflow: auto;
+}
+
+.background-carrier::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dim) */
+    z-index: -1;
+    pointer-events: none;
+}

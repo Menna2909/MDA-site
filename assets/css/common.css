@@ -1,3 +1,126 @@
+/* Common CSS Styles for the Website */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    background: var(--main-color);
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px;
+    z-index: 3000;
+    width: 100%;
+    /* z-index: 0; */
+}
+
+.custom-loader {
+    width: 100px;
+    height: 100px;
+    --c: radial-gradient(farthest-side, #766DF4 92%, #0000);
+    background:
+        var(--c) 50% 0,
+        var(--c) 50% 100%,
+        var(--c) 100% 50%,
+        var(--c) 0 50%;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    animation: s7 1s infinite;
+}
+
+@keyframes s7 {
+    to {
+        transform: rotate(.5turn)
+    }
+}
+
+:root {
+    --main-color: #002059;
+    --secondary-color: #0bbfe2;
+    --main-transition: 0.3s;
+    --main-padding-top: 100px;
+    --main-padding-bottom: 100px;
+    --section-background: #ececec;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-icon {
+    font-size: 1.6em;
+    cursor: pointer;
+    display: none;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 70px;
+    height: 70px;
+}
+
+.sign {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-container .hero-logo a {
+    color: white;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navigation a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #ffffff;
+    font-size: 1.1em;
+    padding: 0 10px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.navigation a:hover {
+    color: var(--secondary-color);
+}
+
+.new-account {
+    background: #0bbfe2;
+    color: #ffffff !important;
+    padding: 13px 15px !important;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.new-account:hover {
+    background: var(--main-color);
+    color: var(--secondary-color);
+}
+
+.active {
+    color: var(--secondary-color) !important;
+}
+
 /* Mobile Menu Styles - Add to form.css */
 .nav-icon {
     display: none;
@@ -9,14 +132,16 @@
 
 .mobile-menu {
     display: none;
-    position: fixed; /* Changed from absolute to fixed */
-    top: 80px; /* Adjust based on your header height */
+    position: fixed;
+    /* Changed from absolute to fixed */
+    top: 80px;
+    /* Adjust based on your header height */
     left: 0;
     width: 100%;
     background: #002059;
     z-index: 1000;
     padding: 20px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .mobile-menu.active {
@@ -28,7 +153,7 @@
     color: white;
     padding: 12px 0;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-menu .sign {
@@ -46,12 +171,120 @@
     .nav-icon {
         display: block;
     }
-    
+
     .navigation {
         display: none;
     }
-    
+
     .mobile-menu {
-        top: 70px; /* Adjust based on your header height */
+        top: 70px;
+        /* Adjust based on your header height */
     }
 }
+
+main {
+    padding: 80px 20px 10px 20px;
+    /* Adjusted padding for main content */
+}
+
+
+footer {
+    background: #001744;
+    padding: 50px 80px;
+    color: white;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+}
+
+.summ {
+    width: 18.75em;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.line i {
+    padding: 5px;
+    font-size: 20px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.events {
+    background-color: #001744;
+}
+
+.active-btn {
+    transform: rotate(90deg);
+    transition: 0.5s ease;
+}
+
+.events p {
+    color: white;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+
+
+.social-icons a {
+    font-size: 1.5em;
+    color: var(--secondary-color);
+    transition: 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: white;
+}
+
+.copyrights {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top: #fff 2px solid;
+    padding-top: 10px;
+}
+
+small-navigation {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 10px;
+    background: var(--main-color);
+    margin-top: 75px;
+    overflow: hidden;
+    display: none;
+    z-index: -999;
+}
+
+.small-navigation nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+}
+
+.new-account-active {
+    background: #002059;
+    color: #0bbfe2;
+}
+

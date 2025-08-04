@@ -2,17 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MDA Application Form</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/common.css" />
-    <link rel="stylesheet" href="assets/css/sucess.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    <link rel="shortcut icon" href="assets/imgs/Team_logo-removebg-preview.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Task Manager</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="assets/css/task-manager.css">
+    <link rel="stylesheet" href="assets/css/common.css">
 </head>
 
 <body>
+
     <header class="header">
         <div class="logo-container">
             <img src="assets/imgs/Team_logo-removebg-preview.png" alt="STEMsera logo" class="logo-img">
@@ -49,31 +48,25 @@
         </div>
     </header>
 
-    <body>
-        <div class="confirmation-container">
-            <div class="confirmation-card">
-                <div class="checkmark-circle">
-                    <i class="fas fa-check checkmark-icon"></i>
-                </div>
-                <h1>Application Submitted Successfully!</h1>
-                <p class="confirmation-message">
-                    Thank you for applying to the MDA Program. We've received your application and will review it shortly.
-                </p>
-                <div class="action-buttons">
-                    <a href="index.html" class="btn home-btn">
-                        <i class="fas fa-home"></i> Return Home
-                    </a>
-                    <a href="form.html" class="btn apply-again-btn">
-                        <i class="fas fa-paper-plane"></i> Submit Another Application
-                    </a>
-                </div>
-                <div class="support-info">
-                    <p>Need help? <a href="contact.html">Contact our support team</a></p>
+    <main class="background-carrier">
+        <!-- Loading Spinner -->
+        <div class="d-flex justify-content-center my-4">
+            <div class="spinner-border loading-spinner text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div class="container mainy py-4">
+            <h1 class="mb-4">Students Task Manager</h1>
+    
+            <!-- Tasks Display -->
+            <div id="tasksContainer">
+                <div id="tasksList" class="row">
+                    <!-- Tasks will be loaded here -->
                 </div>
             </div>
         </div>
-    </body>
-
+    </main>
 
     <footer>
         <div class="footer-container">
@@ -125,9 +118,8 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
-    <script src="js/common.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/task-manager.js"></script>
 </body>
 
 </html>

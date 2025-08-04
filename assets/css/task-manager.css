@@ -1,0 +1,197 @@
+:root {
+    --main-color: #002059;
+    --secondary-color: #0bbfe2;
+    --main-transition: 0.3s;
+    --main-padding-top: 100px;
+    --main-padding-bottom: 100px;
+    --section-background: #ececec;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainy h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+
+.background-carrier {
+  background: url('../imgs/form_background_desktop.jpg');
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: var(--section-background);
+  z-index: 1;
+}
+
+.background-carrier::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dim) */
+    z-index: -1;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+}
+
+.task-card {
+    margin-bottom: 15px;
+    width: 45vw;
+    background-color: var(--main-color);
+    border-left: 4px solid #0d6efd;
+    color: var(--section-background);
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: max-content;
+}
+
+.task-card-content {
+    display: flex;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-size: 25px;
+}
+
+.mentorImgContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 30%;
+}
+
+.mentor-image {
+    height: auto;
+    width: 100%;
+    /* border-radius: 50%; */
+    object-fit: cover;
+}
+
+.card-body {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    margin-top: auto; /* This pushes the button to the bottom */
+    align-self: flex-end;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color var(--main-transition);
+    text-decoration: none;
+    display: inline-block;
+    width: fit-content;
+}
+
+.submit-btn:hover {
+    background-color: #099ec2;
+}
+
+.loading-spinner {
+    display: none;
+    width: 3rem;
+    height: 3rem;
+}
+
+.track-badge {
+    font-size: 0.8em;
+    padding: 0.2em 0.3em 0.2em 0.3em;
+    border-radius: 20px;
+}
+
+.text-muted {
+    margin-left: 0.2em;
+}
+
+/* special colors for every track */
+.Medicine {
+    background-color: blue;
+}
+
+.Dentistry {
+    background-color: green;
+}
+
+.Pharma {
+    background-color: purple;
+}
+
+.PT {
+    background-color: orange;
+}
+
+/* Hidden details initially */
+.task-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    background: var(--main-color);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Show details and resize card on hover */
+.task-card:hover {
+    /* width: 40vw; */
+    /* height: auto; */
+    min-height: 300px;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.task-card:hover .task-card-content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+}
+
+.task-card:hover .task-details {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Additional styling for details */
+.task-details h4 {
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+.detail-item {
+    margin-bottom: 10px;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
